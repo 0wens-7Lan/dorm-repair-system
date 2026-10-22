@@ -1,0 +1,13 @@
+
+> dorm-repair-frontend@0.1.0 build
+> vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 89 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.00 kB │ gzip:   0.54 kB
+dist/assets/index-CR3wF-tI.css   15.47 kB │ gzip:   3.86 kB
+dist/assets/index-B2_NS2Df.js   316.12 kB │ gzip: 113.53 kB
+✓ built in 473ms

@@ -1,0 +1,9 @@
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.087 s -- in com.dormrepair.TokenServiceTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.587 s -- in com.dormrepair.UserAdminServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.520 s -- in com.dormrepair.SecurityHttpTest
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Building jar: /Users/kehanji/Desktop/个人项目/高校宿舍智能报修管理系统+源码/backend/target/dorm-repair-backend-1.0.0.jar
+[INFO] Replacing main artifact /Users/kehanji/Desktop/个人项目/高校宿舍智能报修管理系统+源码/backend/target/dorm-repair-backend-1.0.0.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] BUILD SUCCESS
+[INFO] Total time:  02:51 min
+[INFO] Finished at: 2026-10-19T10:18:49+08:00

@@ -1,0 +1,174 @@
+{
+  "verifiedAt": "2026-10-19T10:20:50.566751+08:00",
+  "baseURL": "http://localhost:18080/api",
+  "checks": [
+    {
+      "check": "匿名访问被拒绝",
+      "method": "GET",
+      "path": "/users",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "check": "无CSRF登录被拒绝",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 403,
+      "passed": true
+    },
+    {
+      "check": "sysadmin登录",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "用户新增",
+      "method": "POST",
+      "path": "/users",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "用户查询",
+      "method": "GET",
+      "path": "/users?keyword=course_test_1792376449",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "用户修改",
+      "method": "PUT",
+      "path": "/users/7",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "用户删除",
+      "method": "DELETE",
+      "path": "/users/7",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "student登录",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "学生越权用户管理被拒绝",
+      "method": "GET",
+      "path": "/users",
+      "status": 403,
+      "passed": true
+    },
+    {
+      "check": "方法角色权限校验",
+      "method": "POST",
+      "path": "/notices",
+      "status": 403,
+      "passed": true
+    },
+    {
+      "check": "空报修表单被拒绝",
+      "method": "POST",
+      "path": "/repair-orders",
+      "status": 400,
+      "passed": true
+    },
+    {
+      "check": "伪造JWT被拒绝",
+      "method": "GET",
+      "path": "/auth/me",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "check": "最后一个系统管理员禁止降权",
+      "method": "PUT",
+      "path": "/users/4",
+      "status": 400,
+      "passed": true
+    },
+    {
+      "check": "学生提交报修",
+      "method": "POST",
+      "path": "/repair-orders",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "admin登录",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "管理员审核",
+      "method": "PUT",
+      "path": "/repair-orders/5/audit",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "repairer登录",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "管理员派单",
+      "method": "PUT",
+      "path": "/repair-orders/5/assign",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "维修人员开始维修",
+      "method": "PUT",
+      "path": "/repair-orders/5/start",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "维修人员提交结果",
+      "method": "PUT",
+      "path": "/repair-orders/5/finish",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "学生确认评价",
+      "method": "PUT",
+      "path": "/repair-orders/5/feedback",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "已完成工单禁止取消",
+      "method": "PUT",
+      "path": "/repair-orders/5/cancel",
+      "status": 400,
+      "passed": true
+    },
+    {
+      "check": "退出登录",
+      "method": "POST",
+      "path": "/auth/logout",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "退出后Cookie失效",
+      "method": "GET",
+      "path": "/auth/me",
+      "status": 401,
+      "passed": true
+    }
+  ]
+}

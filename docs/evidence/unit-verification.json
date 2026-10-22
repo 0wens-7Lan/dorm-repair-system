@@ -1,0 +1,26 @@
+[
+  {
+    "name": "com.dormrepair.SecurityHttpTest",
+    "tests": "11",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.52"
+  },
+  {
+    "name": "com.dormrepair.TokenServiceTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.087"
+  },
+  {
+    "name": "com.dormrepair.UserAdminServiceTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.587"
+  }
+]

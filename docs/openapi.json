@@ -1,0 +1,3447 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "高校宿舍报修 REST API",
+    "description": "先 GET /api/auth/csrf 获取 CSRF token，再在写请求中携带 X-XSRF-TOKEN。登录成功由服务端写入 HttpOnly Cookie，响应不返回 JWT。浏览器请求须 withCredentials=true。",
+    "version": "1.1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:18080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/users/{id}": {
+      "put": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultUser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultVoid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/{id}/reset-password": {
+      "put": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "resetPassword",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultVoid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/{id}/disable": {
+      "put": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "disable",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultVoid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}/start": {
+      "put": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "start",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}/reopen": {
+      "put": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "reopen",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReopenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}/finish": {
+      "put": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "finish",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinishRepairRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}/feedback": {
+      "put": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "feedback",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}/cancel": {
+      "put": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}/audit": {
+      "put": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "audit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}/assign": {
+      "put": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "assign",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/notices/{id}": {
+      "put": {
+        "tags": [
+          "notice-controller"
+        ],
+        "operationId": "update_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoticeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultNotice"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "notice-controller"
+        ],
+        "operationId": "delete_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultVoid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/dorm/rooms/{id}": {
+      "put": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "updateRoom",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DormRoomRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultDormRoom"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "deleteRoom",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultVoid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/dorm/buildings/{id}": {
+      "put": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "updateBuilding",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DormBuildingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultDormBuilding"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "deleteBuilding",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultVoid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "page",
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 10
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roleCode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultIPageMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultUser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders": {
+      "get": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "page_1",
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 10
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "buildingId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "studentName",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repairerId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultIPageMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "create_1",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRepairRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultRepairOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/notices": {
+      "get": {
+        "tags": [
+          "notice-controller"
+        ],
+        "operationId": "page_2",
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 10
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultIPageNotice"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "notice-controller"
+        ],
+        "operationId": "create_2",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoticeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultNotice"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/dorm/rooms": {
+      "get": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "rooms_1",
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 10
+            }
+          },
+          {
+            "name": "buildingId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "roomNo",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultIPageMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "createRoom",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DormRoomRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultDormRoom"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/dorm/buildings": {
+      "get": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "buildings_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListDormBuilding"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "createBuilding",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DormBuildingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultDormBuilding"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "register",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "logout",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultVoid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "login",
+        "parameters": [
+          {
+            "name": "X-XSRF-TOKEN",
+            "in": "header",
+            "description": "由 /api/auth/csrf 获取，并与同一客户端 Cookie 配套使用",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/users/roles": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "roles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListRole"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/statistics/overview": {
+      "get": {
+        "tags": [
+          "statistics-controller"
+        ],
+        "operationId": "overview",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/repair-orders/{id}": {
+      "get": {
+        "tags": [
+          "repair-order-controller"
+        ],
+        "operationId": "detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/public/notices": {
+      "get": {
+        "tags": [
+          "public-controller"
+        ],
+        "operationId": "notices",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListNotice"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/public/dorm/rooms": {
+      "get": {
+        "tags": [
+          "public-controller"
+        ],
+        "operationId": "rooms",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListDormRoom"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/public/dorm/buildings": {
+      "get": {
+        "tags": [
+          "public-controller"
+        ],
+        "operationId": "buildings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListDormBuilding"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/public/categories": {
+      "get": {
+        "tags": [
+          "public-controller"
+        ],
+        "operationId": "categories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListRepairCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/meta/repairers": {
+      "get": {
+        "tags": [
+          "meta-controller"
+        ],
+        "operationId": "repairers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/meta/categories": {
+      "get": {
+        "tags": [
+          "meta-controller"
+        ],
+        "operationId": "categories_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListRepairCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/logs": {
+      "get": {
+        "tags": [
+          "operation-log-controller"
+        ],
+        "operationId": "page_3",
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 10
+            }
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultIPageMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/health": {
+      "get": {
+        "tags": [
+          "root-controller"
+        ],
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/api/dorm/rooms/options": {
+      "get": {
+        "tags": [
+          "dorm-controller"
+        ],
+        "operationId": "roomOptions",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListDormRoom"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "me",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMapStringObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/auth/csrf": {
+      "get": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "csrf",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CsrfToken"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMapStringString"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "root-controller"
+        ],
+        "operationId": "index",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数校验失败或业务状态不允许"
+          },
+          "401": {
+            "description": "未登录、JWT 无效/过期或账号被禁用"
+          },
+          "403": {
+            "description": "角色/权限/数据归属不允许或 CSRF 校验失败"
+          },
+          "500": {
+            "description": "服务器内部异常，不返回内部错误细节"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserUpdateRequest": {
+        "required": [
+          "name",
+          "roleId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "studentNo": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dormRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResultUser": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "studentNo": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dormRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PasswordResetRequest": {
+        "required": [
+          "newPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "newPassword": {
+            "maxLength": 72,
+            "minLength": 8,
+            "pattern": "[ -~]+",
+            "type": "string"
+          }
+        }
+      },
+      "ApiResultVoid": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "ApiResultRepairOrder": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RepairOrder"
+          }
+        }
+      },
+      "RepairOrder": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "orderNo": {
+            "type": "string"
+          },
+          "studentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dormRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": {
+            "type": "string"
+          },
+          "contactPhone": {
+            "type": "string"
+          },
+          "expectedTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "rejectReason": {
+            "type": "string"
+          },
+          "auditUserId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "auditTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "repairerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "submitTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completeTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "faultReason": {
+            "type": "string"
+          },
+          "repairMethod": {
+            "type": "string"
+          },
+          "replacedParts": {
+            "type": "string"
+          },
+          "resultSummary": {
+            "type": "string"
+          },
+          "resultImageUrl": {
+            "type": "string"
+          },
+          "reopenReason": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ReopenRequest": {
+        "required": [
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string"
+          },
+          "repairerId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "FinishRepairRequest": {
+        "required": [
+          "faultReason",
+          "repairMethod",
+          "resultSummary"
+        ],
+        "type": "object",
+        "properties": {
+          "faultReason": {
+            "type": "string"
+          },
+          "repairMethod": {
+            "type": "string"
+          },
+          "replacedParts": {
+            "type": "string"
+          },
+          "resultSummary": {
+            "type": "string"
+          },
+          "resultImageUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "FeedbackRequest": {
+        "type": "object",
+        "properties": {
+          "speedScore": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "attitudeScore": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "qualityScore": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "overallScore": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "unresolved": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AuditRequest": {
+        "required": [
+          "approved"
+        ],
+        "type": "object",
+        "properties": {
+          "approved": {
+            "type": "boolean"
+          },
+          "rejectReason": {
+            "type": "string"
+          }
+        }
+      },
+      "AssignRequest": {
+        "required": [
+          "repairerId"
+        ],
+        "type": "object",
+        "properties": {
+          "repairerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "NoticeRequest": {
+        "required": [
+          "content",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResultNotice": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Notice"
+          }
+        }
+      },
+      "Notice": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "publisherId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "publishTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DormRoomRequest": {
+        "required": [
+          "buildingId",
+          "floor",
+          "roomNo"
+        ],
+        "type": "object",
+        "properties": {
+          "buildingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "floor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roomNo": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "occupied": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ApiResultDormRoom": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DormRoom"
+          }
+        }
+      },
+      "DormRoom": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "buildingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "floor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roomNo": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "occupied": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DormBuildingRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "floors": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResultDormBuilding": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DormBuilding"
+          }
+        }
+      },
+      "DormBuilding": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "floors": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "address": {
+            "type": "string"
+          },
+          "createTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UserCreateRequest": {
+        "required": [
+          "name",
+          "password",
+          "roleId",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "maxLength": 60,
+            "minLength": 0,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 72,
+            "minLength": 8,
+            "pattern": "[ -~]+",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "studentNo": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dormRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateRepairRequest": {
+        "required": [
+          "categoryId",
+          "contactPhone",
+          "description",
+          "dormRoomId"
+        ],
+        "type": "object",
+        "properties": {
+          "categoryId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dormRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": {
+            "type": "string"
+          },
+          "contactPhone": {
+            "type": "string"
+          },
+          "expectedTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "RegisterRequest": {
+        "required": [
+          "dormRoomId",
+          "name",
+          "password",
+          "phone",
+          "studentNo",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "maxLength": 60,
+            "minLength": 0,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 72,
+            "minLength": 8,
+            "pattern": "[ -~]+",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "studentNo": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "dormRoomId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ApiResultMapStringObject": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "maxLength": 60,
+            "minLength": 0,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 72,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
+      },
+      "ApiResultIPageMapStringObject": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/IPageMapStringObject"
+          }
+        }
+      },
+      "IPageMapStringObject": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "pages": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "current": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ApiResultListRole": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "createTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApiResultListNotice": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notice"
+            }
+          }
+        }
+      },
+      "ApiResultListDormRoom": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DormRoom"
+            }
+          }
+        }
+      },
+      "ApiResultListDormBuilding": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DormBuilding"
+            }
+          }
+        }
+      },
+      "ApiResultListRepairCategory": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepairCategory"
+            }
+          }
+        }
+      },
+      "RepairCategory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ApiResultIPageNotice": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/IPageNotice"
+          }
+        }
+      },
+      "IPageNotice": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notice"
+            }
+          },
+          "pages": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "current": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ApiResultListMapStringObject": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "CsrfToken": {
+        "type": "object",
+        "properties": {
+          "headerName": {
+            "type": "string"
+          },
+          "parameterName": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResultMapStringString": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "name": "DORM_AUTH",
+        "in": "cookie"
+      }
+    }
+  }
+}
